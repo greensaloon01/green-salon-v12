@@ -539,10 +539,10 @@ async function loadSummary(){try{const d=await POST({action:'getBranchSummary'})
 function renderGrid(){
   const g=document.getElementById('staff-grid');
   if(!S.staff.length){g.innerHTML='<div class="ld" style="grid-column:1/-1;flex-direction:column;gap:10px;color:var(--muted)"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".4"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><div style="text-align:center">No staff yet. Add from Owner Panel.</div></div>';return;}
-  g.innerHTML=S.staff.map(s=>`<div class="scard" onclick="selStaff('${s.id}')"><div class="scard-av">${s.name[0].toUpperCase()}</div><div class="scard-name">${s.name}</div><span class="scard-badge ${s.hasCommission?'comm':'nocomm'}">${s.hasCommission?'Comm':'Fixed'}</span></div>`).join('');
+  g.innerHTML=S.staff.map(s=>`<div class="scard" onclick="selStaff('${s.id}')"><div class="scard-av">${(s.name || 'U')[0].toUpperCase()}</div><div class="scard-name">${s.name}</div><span class="scard-badge ${s.hasCommission?'comm':'nocomm'}">${s.hasCommission?'Comm':'Fixed'}</span></div>`).join('');
 }
 
-function selStaff(id){S.sel=S.staff.find(s=>s.id===id);if(!S.sel)return;document.getElementById('sf-av').textContent=S.sel.name[0].toUpperCase();document.getElementById('sf-name').textContent=S.sel.name;fillDates();openSvcForm();document.getElementById('bnav').classList.add('vis');document.getElementById('ni-add').classList.add('on');document.getElementById('ni-log').classList.remove('on');}
+function selStaff(id){S.sel=S.staff.find(s=>s.id===id);if(!S.sel)return;document.getElementById('sf-av').textContent = (S.sel.name || 'U')[0].toUpperCase();document.getElementById('sf-name').textContent=S.sel.name;fillDates();openSvcForm();document.getElementById('bnav').classList.add('vis');document.getElementById('ni-add').classList.add('on');document.getElementById('ni-log').classList.remove('on');}
 
 function goGrid(){S.sel=null;stopAutoTimer();show('s-grid');document.getElementById('bnav').classList.remove('vis');loadStaff();loadSummary();}
 
